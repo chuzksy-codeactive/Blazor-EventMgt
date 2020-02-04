@@ -1,5 +1,24 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@using EventManager.Server.Components
 
-Welcome to your new app.
+<div class="row">
+    <div class="col-sm-8">
+        <div class="intro">
+            <h1>Welcome to Event Manager!</h1>
+            <p>
+                At EventCity! we pride ourselves on the unrivalled personal
+                event services, we provide to our client. We guide you from
+                the stressful decision making process, ensuring you are
+                comfortable, whether it is a wedding, corporate function or
+                even a kiddies party, we create a buzz around you,
+                taking you to the next level.
+            </p>
+            <h2>Innovation, Performance and Delivery</h2>
+            <button type="button" class="btn btn-success">Sign in here</button>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <Signup />
+    </div>
+</div>

@@ -19,11 +19,38 @@
 
 .main {
     height: 95vh !important;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/Banquets.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../images/Banquets.png');
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     overflow: auto;
     height: 100%;
+    margin-bottom: 60px;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    color: white;
+}
+
+.intro {
+    margin-top: 60px;
+    margin-right: 20px;
+}
+
+.intro p {
+    line-height: 200%;
+}
+
+.signup-form {
+    margin-top: 60px;
+    background-color: #FAFBFC;
+    color: #24292E !important;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.signup-form label {
+    font-weight: 500;
 }
