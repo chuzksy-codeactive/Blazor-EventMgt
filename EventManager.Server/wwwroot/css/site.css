@@ -26,7 +26,6 @@
     background-size: cover;
     overflow: auto;
     height: 100%;
-    margin-bottom: 60px;
 }
 
 body {
@@ -45,12 +44,26 @@ body {
 
 .signup-form {
     margin-top: 60px;
+}
+
+.signup-form,
+.signin-form{
     background-color: #FAFBFC;
     color: #24292E !important;
     padding: 20px;
     border-radius: 5px;
+    margin-bottom: 60px;
 }
 
-.signup-form label {
+.signup-form label,
+.signin-form label {
+    font-weight: 500;
+}
+
+.signin-header h3 {
+    margin-top: 60px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: white;
     font-weight: 500;
 }
