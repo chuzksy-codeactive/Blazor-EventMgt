@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using EventManager.Server.Models;
+using EventManager.Server.DTOs;
 
 namespace EventManager.Server.Services
 {

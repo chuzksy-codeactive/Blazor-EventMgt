@@ -1,5 +1,5 @@
 ﻿using System;
-namespace EventManager.Server.Models
+namespace EventManager.Server.DTOs
 {
     public class User
     {
