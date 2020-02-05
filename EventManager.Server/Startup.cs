@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EventManager.Server.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +27,12 @@ namespace EventManager.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddServerSideBlazor();
+            services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
+            services.AddHttpClient<IUserDataService, UserDataService>
+                (client =>
+                {
+                    client.BaseAddress = new Uri("https://localhost:5001/");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

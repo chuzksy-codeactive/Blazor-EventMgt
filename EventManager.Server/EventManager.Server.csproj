@@ -11,5 +11,7 @@
   <ItemGroup>
     <Folder Include="Components\" />
     <Folder Include="wwwroot\images\" />
+    <Folder Include="Services\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>
