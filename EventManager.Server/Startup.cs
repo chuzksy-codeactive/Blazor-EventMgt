@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sotsera.Blazor.Toaster.Core.Models;
 
 namespace EventManager.Server
 {
@@ -26,12 +27,18 @@ namespace EventManager.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddToaster(config =>
+            {
+                config.PositionClass = Defaults.Classes.Position.TopRight;
+                config.PreventDuplicates = true;
+                config.NewestOnTop = false;
+            });
             services.AddRazorPages();
             services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
             services.AddHttpClient<IUserDataService, UserDataService>
                 (client =>
                 {
-                    client.BaseAddress = new Uri("https://localhost:5001/");
+                    client.BaseAddress = new Uri("https://localhost:8090/");
                 });
         }
 

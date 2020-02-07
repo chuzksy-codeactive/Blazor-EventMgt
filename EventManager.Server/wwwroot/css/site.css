@@ -67,3 +67,14 @@ body {
     color: white;
     font-weight: 500;
 }
+
+.form-control.invalid {
+    border-color: #dc3545;
+}
+
+.validation-message {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}

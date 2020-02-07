@@ -7,9 +7,9 @@ namespace EventManager.Server.Services
 {
     public interface IUserDataService
     {
-        Task<IEnumerable<User>> GetUsersAsync();
-        Task<User> AddUserAsync(User user);
-        Task<User> AuthenticateUserAsync(AuthenticateUser authenticateUser);
-        Task<User> GetUserByIdAsync(Guid userId);
+        Task<IEnumerable<UserDto>> GetUsersAsync();
+        Task<UserLoginDto> AddUserAsync(UserDto user);
+        Task<UserDto> AuthenticateUserAsync(AuthenticateUserDto authenticateUser);
+        Task<UserDto> GetUserByIdAsync(Guid userId);
     }
 }

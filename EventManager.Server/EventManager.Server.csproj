@@ -14,4 +14,8 @@
     <Folder Include="Services\" />
     <Folder Include="DTOs\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
 </Project>
