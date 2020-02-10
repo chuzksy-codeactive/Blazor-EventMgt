@@ -15,26 +15,30 @@ namespace EventManager.Server.Components
         [Inject]
         protected Sotsera.Blazor.Toaster.IToaster Toaster { get; set; }
 
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
         public UserDto _user = new UserDto();
 
         public async Task HandleValidSubmit()
         {
-            Console.WriteLine("=========== OnValidSubmit ============");
             var user = await UserDataService.AddUserAsync(_user);
 
-            if (user != null )
+            if (user.User != string.Empty )
             {
                 Toaster.Success("New user added successfully");
-                _user = null;
-                StateHasChanged();
+                NavigateToOverView();
             }
             else
             {
-                Toaster.Error("Something went wrong! Try again");
-                _user = null;
-                StateHasChanged();
+                Toaster.Error(user.Message);
             }
 
+        }
+
+        protected void NavigateToOverView()
+        {
+            NavigationManager.NavigateTo("/login");
         }
     }
 }

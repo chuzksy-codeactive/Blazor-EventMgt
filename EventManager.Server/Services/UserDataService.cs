@@ -27,6 +27,7 @@ namespace EventManager.Server.Services
         {
             HttpContent httpContent = new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json");
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var userLogin = new UserLoginDto();
 
             var response = await _httpClient.PostAsync("api/users", httpContent);
             var responseBody = await response.Content.ReadAsStreamAsync();
@@ -35,8 +36,14 @@ namespace EventManager.Server.Services
             {
                 return await JsonSerializer.DeserializeAsync<UserLoginDto>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             }
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                userLogin.User = string.Empty;
+                userLogin.Email = string.Empty;
+                userLogin.Message = await response.Content.ReadAsStringAsync();
+            }
 
-            return null;
+            return userLogin;
         }
 
         public async Task<UserDto> AuthenticateUserAsync(AuthenticateUserDto authenticateUser)
