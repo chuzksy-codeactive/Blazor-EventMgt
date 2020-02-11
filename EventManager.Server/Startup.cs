@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EventManager.Server.DTOs;
 using EventManager.Server.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -27,6 +28,7 @@ namespace EventManager.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IAuthenticatedUserDto, AuthenticatedUserDto>();
             services.AddToaster(config =>
             {
                 config.PositionClass = Defaults.Classes.Position.TopRight;

@@ -9,7 +9,7 @@ namespace EventManager.Server.Services
     {
         Task<IEnumerable<UserDto>> GetUsersAsync();
         Task<UserLoginDto> AddUserAsync(UserDto user);
-        Task<AuthenticatedUser> AuthenticateUserAsync(AuthenticateUserDto authenticateUser);
+        Task<AuthenticatedUserDto> AuthenticateUserAsync(AuthenticateUserDto authenticateUser);
         Task<UserDto> GetUserByIdAsync(Guid userId);
     }
 }

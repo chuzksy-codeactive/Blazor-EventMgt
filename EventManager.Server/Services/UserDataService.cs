@@ -32,7 +32,7 @@ namespace EventManager.Server.Services
             var response = await _httpClient.PostAsync("api/users", httpContent);
             var responseBody = await response.Content.ReadAsStreamAsync();
 
-            if (response.IsSuccessStatusCode == false)
+            if (!response.IsSuccessStatusCode)
             {
                 throw new ApiException
                 {
@@ -44,25 +44,23 @@ namespace EventManager.Server.Services
             return await JsonSerializer.DeserializeAsync<UserLoginDto>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
-        public async Task<AuthenticatedUser> AuthenticateUserAsync(AuthenticateUserDto authenticateUser)
+        public async Task<AuthenticatedUserDto> AuthenticateUserAsync(AuthenticateUserDto authenticateUser)
         {
             HttpContent httpContent = new StringContent(JsonSerializer.Serialize(authenticateUser), Encoding.UTF8, "application/json");
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var user = new AuthenticatedUser();
 
             var response = await _httpClient.PostAsync("api/users/authenticate", httpContent);
             var responseBody = await response.Content.ReadAsStreamAsync();
 
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-                return await JsonSerializer.DeserializeAsync<AuthenticatedUser>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                throw new ApiException
+                {
+                    StatusCode = (int)response.StatusCode,
+                    Content = await response.Content.ReadAsStringAsync()
+                };
             }
-            if (response.StatusCode == HttpStatusCode.BadRequest)
-            {
-                user.Message = await response.Content.ReadAsStringAsync();
-            }
-
-            return user;
+            return await JsonSerializer.DeserializeAsync<AuthenticatedUserDto>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
         public async Task<UserDto> GetUserByIdAsync(Guid userId)

@@ -15,9 +15,9 @@
                 <div class="form-group">
                     <label for="password">Password</label>
                     <InputText type="password" class="form-control" @bind-Value="_user.Password" />
+                    <ValidationMessage For="@(() => _user.Password)" />
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <ValidationMessage For="@(() => _user.Password)" />
             </EditForm>
         </div>
     </div>
