@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using EventManager.Server.DTOs;
+using EventManager.Server.Exceptions;
 using EventManager.Server.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -22,18 +23,16 @@ namespace EventManager.Server.Components
 
         public async Task HandleValidSubmit()
         {
-            var user = await UserDataService.AddUserAsync(_user);
-
-            if (user.User != string.Empty )
+            try
             {
+                var user = await UserDataService.AddUserAsync(_user);
                 Toaster.Success("New user added successfully");
                 NavigateToOverView();
             }
-            else
+            catch (ApiException ex)
             {
-                Toaster.Error(user.Message);
+                Toaster.Error(ex.Content);
             }
-
         }
 
         protected void NavigateToOverView()

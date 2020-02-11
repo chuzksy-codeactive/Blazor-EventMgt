@@ -13,6 +13,7 @@
     <Folder Include="wwwroot\images\" />
     <Folder Include="Services\" />
     <Folder Include="DTOs\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />

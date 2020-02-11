@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 using EventManager.Server.DTOs;
+using EventManager.Server.Exceptions;
 using Microsoft.AspNetCore.Components;
 
 namespace EventManager.Server.Services
@@ -27,36 +28,41 @@ namespace EventManager.Server.Services
         {
             HttpContent httpContent = new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json");
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var userLogin = new UserLoginDto();
 
             var response = await _httpClient.PostAsync("api/users", httpContent);
             var responseBody = await response.Content.ReadAsStreamAsync();
 
+            if (response.IsSuccessStatusCode == false)
+            {
+                throw new ApiException
+                {
+                    StatusCode = (int)response.StatusCode,
+                    Content = await response.Content.ReadAsStringAsync()
+                };
+            }
+
+            return await JsonSerializer.DeserializeAsync<UserLoginDto>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+
+        public async Task<AuthenticatedUser> AuthenticateUserAsync(AuthenticateUserDto authenticateUser)
+        {
+            HttpContent httpContent = new StringContent(JsonSerializer.Serialize(authenticateUser), Encoding.UTF8, "application/json");
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var user = new AuthenticatedUser();
+
+            var response = await _httpClient.PostAsync("api/users/authenticate", httpContent);
+            var responseBody = await response.Content.ReadAsStreamAsync();
+
             if (response.IsSuccessStatusCode)
             {
-                return await JsonSerializer.DeserializeAsync<UserLoginDto>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return await JsonSerializer.DeserializeAsync<AuthenticatedUser>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             }
             if (response.StatusCode == HttpStatusCode.BadRequest)
             {
-                userLogin.User = string.Empty;
-                userLogin.Email = string.Empty;
-                userLogin.Message = await response.Content.ReadAsStringAsync();
+                user.Message = await response.Content.ReadAsStringAsync();
             }
 
-            return userLogin;
-        }
-
-        public async Task<UserDto> AuthenticateUserAsync(AuthenticateUserDto authenticateUser)
-        {
-            var authenticateUserJson = new StringContent(JsonSerializer.Serialize(authenticateUser), Encoding.UTF8, "application/json-patch+json");
-            var response = await _httpClient.PostAsync("api/users/authenticate", authenticateUserJson);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return await JsonSerializer.DeserializeAsync<UserDto>(await response.Content.ReadAsStreamAsync());
-            }
-
-            return null;
+            return user;
         }
 
         public async Task<UserDto> GetUserByIdAsync(Guid userId)
